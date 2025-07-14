@@ -1,11 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 #root{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: "Winky Rough", sans-serif;
-
+  font-family: "Ubuntu", sans-serif;
 }
 
 main{
@@ -17,3 +16,36 @@ footer{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
+img{
+
+}
+
+
+.contenedorImagen{
+  transition: 300ms;
+}
+
+.contenedorImagen:hover{
+    transform: scale(1.05);
+}
+
+.titulos{
+  background: #F26430;
+}
+
+.fondoCard{
+  background: #F2E205
+}
+
+.banner {
+  object-fit: cover;
+  height: 385px;
+  width: 100%;
+  object-position: 50% 70%;;
+}
+
+.card-img-top-nueva {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}

@@ -6,6 +6,7 @@ import Menu from "./components/shared/Menu";
 import Inicio from "./components/pages/Index"
 import DetalleReceta from "./components/pages/DetalleReceta";
 import Administrador from "./components/pages/Administrador";
+import Login from "./components/pages/recetas/Login";
 import { useState } from "react";
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
         <main>
           {/*<Error404></Error404>*/}
           {/*<Inicio></Inicio>*/}
-          <Administrador></Administrador>
+          <Login></Login>
+          {/*<Administrador></Administrador>*/}
           {/*<DetalleReceta></DetalleReceta>*/}
           {/*<FormularioReceta></FormularioReceta>*/}
         </main>

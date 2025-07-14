@@ -4,6 +4,7 @@ import Error404 from "./components/pages/Error404";
 import Footer from "./components/shared/Footer";
 import Menu from "./components/shared/Menu";
 import Inicio from "./components/pages/Index"
+import DetalleReceta from "./components/pages/DetalleReceta";
 import { useState } from "react";
 
 function App() {
@@ -13,9 +14,9 @@ function App() {
         <Menu></Menu>
         <main>
           {/*<Error404></Error404>*/}
-          <Inicio></Inicio>
+          {/*<Inicio></Inicio>*/}
           {/*<Administrador></Administrador>*/}
-          {/*<DetalleReceta></DetalleReceta>*/}
+          <DetalleReceta></DetalleReceta>
           {/*<FormularioReceta></FormularioReceta>*/}
         </main>
       <Footer></Footer>

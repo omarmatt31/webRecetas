@@ -16,10 +16,6 @@ footer{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-img{
-
-}
-
 
 .contenedorImagen{
   transition: 300ms;
@@ -31,6 +27,10 @@ img{
 
 .titulos{
   background: #F26430;
+}
+
+.colorTitulos{
+  color: #F26430;
 }
 
 .fondoCard{

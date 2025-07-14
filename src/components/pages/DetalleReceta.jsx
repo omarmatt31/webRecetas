@@ -24,7 +24,7 @@ const DetalleReceta = () => {
           </Col>
         </Row>
         <Row className="my-4">
-            <Col>
+            <Col md={4} className="mt-3">
                 <h3 className="colorTitulos"><i class="bi bi-basket2 me-2"></i>Ingredientes:</h3>
                     <ListGroup as="ol" className="w-75">
                         <ListGroup.Item as="li" className="text-secondary">1,40 kg Costillas de cerdo</ListGroup.Item>
@@ -34,7 +34,7 @@ const DetalleReceta = () => {
                         <ListGroup.Item as="li" className="text-secondary">¼ cucharadita Especias surtidas molidas</ListGroup.Item>
                     </ListGroup>
             </Col>
-            <Col>
+            <Col className="border-start mt-3">
                <h3 className="colorTitulos">Paso a Paso</h3>
                <p className="fw-light">Preparar la salsa mezclando barbacoa, Ají triturado, Especias Surtidas molidas y Pimienta Negra molida.
                 Limpiar el pechito de cerdo intentando sacarle la mayor cantidad de grasa posible y pintarlo con la salsa previamente hecha.

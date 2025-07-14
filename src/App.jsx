@@ -6,7 +6,7 @@ import Menu from "./components/shared/Menu";
 import Inicio from "./components/pages/Index"
 import DetalleReceta from "./components/pages/DetalleReceta";
 import Administrador from "./components/pages/Administrador";
-import Login from "./components/pages/recetas/Login";
+import Login from "./components/pages/Login";
 import { useState } from "react";
 
 function App() {

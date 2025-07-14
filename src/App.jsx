@@ -13,16 +13,22 @@ function App() {
 
   return (
     <>
+      <BrowserRouter>
         <Menu></Menu>
         <main>
-          {/*<Error404></Error404>*/}
-          {/*<Inicio></Inicio>*/}
-          <Login></Login>
-          {/*<Administrador></Administrador>*/}
-          {/*<DetalleReceta></DetalleReceta>*/}
-          {/*<FormularioReceta></FormularioReceta>*/}
+          <Routes>
+            <Route path="/" element={<Inicio></Inicio>}></Route>
+            <Route path="/detalle" element={<DetalleReceta></DetalleReceta>}></Route>
+            <Route path="/administrador" element={<Administrador></Administrador>}></Route>
+            {/*<Route path="/administrador/crear" element={<FormularioReceta></FormularioReceta>}></Route>*/}
+            {/*<Route path="/administrador/editar" element={<FormularioReceta></FormularioReceta>}></Route>*/}
+            <Route path="*" element={<Error404></Error404>}></Route>
+            
+            {/*<Login></Login>*/}
+          </Routes>
         </main>
-      <Footer></Footer>
+        <Footer></Footer>
+      </BrowserRouter>
     </>
   )
 }

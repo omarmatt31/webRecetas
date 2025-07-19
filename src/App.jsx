@@ -8,6 +8,8 @@ import DetalleReceta from "./components/pages/DetalleReceta";
 import Administrador from "./components/pages/Administrador";
 import Login from "./components/pages/Login";
 import { useState } from "react";
+import ProtectorAdmin from "./components/routes/ProtectorAdmin";
+import FormularioReceta from "./components/pages/recetas/FormularioReceta";
 
 function App() {
   const usuarioLogueado = sessionStorage.getItem('userKey')||false;
@@ -21,9 +23,11 @@ function App() {
             <Route path="/" element={<Inicio></Inicio>}></Route>
             <Route path="/detalle" element={<DetalleReceta></DetalleReceta>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
-            <Route path="/administrador" element={<Administrador></Administrador>}></Route>
-            {/*<Route path="/administrador/crear" element={<FormularioReceta></FormularioReceta>}></Route>*/}
-            {/*<Route path="/administrador/editar" element={<FormularioReceta></FormularioReceta>}></Route>*/}
+            <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+              <Route index element={<Administrador></Administrador>}></Route>
+              <Route path="crear" element={<FormularioReceta></FormularioReceta>}></Route>
+              <Route path="editar" element={<FormularioReceta></FormularioReceta>}></Route>
+            </Route>
             <Route path="*" element={<Error404></Error404>}></Route>
           </Routes>
         </main>

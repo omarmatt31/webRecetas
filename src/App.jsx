@@ -10,16 +10,17 @@ import Login from "./components/pages/Login";
 import { useState } from "react";
 
 function App() {
-
+  const usuarioLogueado = sessionStorage.getItem('userKey')||false;
+  const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado)
   return (
     <>
       <BrowserRouter>
-        <Menu></Menu>
+        <Menu usuarioAdmin={usuarioAdmin} setUsuarioAdmin={setUsuarioAdmin}></Menu>
         <main>
           <Routes>
             <Route path="/" element={<Inicio></Inicio>}></Route>
             <Route path="/detalle" element={<DetalleReceta></DetalleReceta>}></Route>
-            <Route path="/login" element={<Login></Login>}></Route>
+            <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/administrador" element={<Administrador></Administrador>}></Route>
             {/*<Route path="/administrador/crear" element={<FormularioReceta></FormularioReceta>}></Route>*/}
             {/*<Route path="/administrador/editar" element={<FormularioReceta></FormularioReceta>}></Route>*/}

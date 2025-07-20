@@ -10,6 +10,7 @@ import Login from "./components/pages/Login";
 import { useEffect, useState } from "react";
 import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import FormularioReceta from "./components/pages/recetas/FormularioReceta";
+import {v4 as uuidv4} from 'uuid';
 
 function App() {
   const usuarioLogueado = sessionStorage.getItem('userKey')||false;
@@ -20,6 +21,12 @@ function App() {
   useEffect(()=>{
     localStorage.setItem('catalogoRecetas', JSON.stringify(recetas))
   }, [recetas])
+
+  const crearReceta=(recetaNueva)=>{
+    recetaNueva.id = uuidv4();
+    setRecetas([...recetas, recetaNueva])
+    return true
+  }
   return (
     <>
       <BrowserRouter>
@@ -31,7 +38,7 @@ function App() {
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route index element={<Administrador setRecetas={setRecetas} recetas={recetas}></Administrador>}></Route>
-              <Route path="crear" element={<FormularioReceta></FormularioReceta>}></Route>
+              <Route path="crear" element={<FormularioReceta crearReceta={crearReceta}></FormularioReceta>}></Route>
               <Route path="editar" element={<FormularioReceta></FormularioReceta>}></Route>
             </Route>
             <Route path="*" element={<Error404></Error404>}></Route>

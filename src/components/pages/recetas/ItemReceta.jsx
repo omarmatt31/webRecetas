@@ -1,6 +1,36 @@
 import { Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 
-const ItemReceta = ({receta, fila}) => {
+const ItemReceta = ({receta, fila, borrarReceta}) => {
+
+    const eliminarReceta=()=>{
+    Swal.fire({
+      title: "Eliminar Receta",
+      text: "No puedes revertir este paso",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#024959",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if(borrarReceta(receta.id)){
+          Swal.fire({
+            title: "Receta eliminada",
+            text: `La receta ${receta.nombreReceta} fue eliminada correctamente`,
+            icon: "success",
+          });
+        }else{
+            Swal.fire({
+            title: "Ocurrio un error",
+            text: `La receta ${receta.nombreReceta} no pudo ser eliminada.`,
+            icon: "error",
+          });
+        }
+      }
+    });
+    }
     return (
    <tr>
       <td className="text-center align-middle">{fila}</td>
@@ -17,7 +47,7 @@ const ItemReceta = ({receta, fila}) => {
         <Button variant="warning" className="me-lg-2">
           <i className="bi bi-pencil-square"></i>
         </Button>
-        <Button variant="danger">
+        <Button variant="danger" onClick={eliminarReceta}>
           <i className="bi bi-trash"></i>
         </Button>
       </td>

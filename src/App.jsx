@@ -24,7 +24,14 @@ function App() {
 
   const crearReceta=(recetaNueva)=>{
     recetaNueva.id = uuidv4();
+    console.log(recetaNueva)
     setRecetas([...recetas, recetaNueva])
+    return true
+  }
+
+  const borrarReceta=(idReceta)=>{
+    const recetasFiltradas = recetas.filter((itemReceta)=> itemReceta.id !== idReceta)
+    setRecetas(recetasFiltradas)
     return true
   }
   return (
@@ -37,7 +44,7 @@ function App() {
             <Route path="/detalle" element={<DetalleReceta></DetalleReceta>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
-              <Route index element={<Administrador setRecetas={setRecetas} recetas={recetas}></Administrador>}></Route>
+              <Route index element={<Administrador setRecetas={setRecetas} recetas={recetas} borrarReceta={borrarReceta}></Administrador>}></Route>
               <Route path="crear" element={<FormularioReceta crearReceta={crearReceta}></FormularioReceta>}></Route>
               <Route path="editar" element={<FormularioReceta></FormularioReceta>}></Route>
             </Route>

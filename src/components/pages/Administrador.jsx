@@ -3,7 +3,7 @@ import ItemReceta from "./recetas/ItemReceta";
 import { recetasData } from "../../data/recetasPrueba"
 import { Link } from "react-router";
 
-const Administrador = ({setRecetas, recetas}) => {
+const Administrador = ({setRecetas, recetas, borrarReceta}) => {
 
     const cargarRecetasPrueba = () =>{
       setRecetas(recetasData)
@@ -33,7 +33,7 @@ const Administrador = ({setRecetas, recetas}) => {
         </thead>
         <tbody>
           {
-            recetas.map((receta, indice)=> <ItemReceta key={receta.id} receta={receta} fila={indice+1}></ItemReceta>)
+            recetas.map((receta, indice)=> <ItemReceta key={receta.id} receta={receta} fila={indice+1} borrarReceta={borrarReceta}></ItemReceta>)
           }
         </tbody>
       </Table>

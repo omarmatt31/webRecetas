@@ -1,20 +1,20 @@
 import { Col, Card, Button } from "react-bootstrap";
 
-const CardReceta = () => {
+const CardReceta = ({receta}) => {
     return (
     <Col md={4} lg={3} className="mb-3 contenedorImagen ">
       <Card className="h-100 ">
         <div className="" >
           <img
-            src="https://images.pexels.com/photos/27953851/pexels-photo-27953851.jpeg"
+            src={receta.imagen}
             alt="costilla de cerdo"
             className="card-img-top-nueva"
           />
         </div>
         <Card.Body>
-          <Card.Title className="text-secondary">Costillas de cerdo a la barbacoa</Card.Title>
+          <Card.Title className="text-secondary">{receta.nombreReceta}</Card.Title>
           <Card.Text className="text-end">
-            <span className="text-secondary fw-bold"><i class="bi bi-stopwatch me-2"></i>1hr 15 min</span>
+            <span className="text-secondary fw-bold"><i className="bi bi-stopwatch me-2"></i>{receta.duracion}</span>
           </Card.Text>
         </Card.Body>
         <Card.Footer className="text-center fondoCard">

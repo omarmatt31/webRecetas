@@ -1,12 +1,65 @@
-# React + Vite
+# 🍳 **Blog de Recetas de Cocina**  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Autor:** Omar Mattos ✨  
+Aplicación web para compartir y gestionar recetas culinarias con almacenamiento local persistente.  
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 **Funcionalidades principales**  
 
-## Expanding the ESLint configuration
+### 📖 **Página pública**  
+- 🖼️ Visualización de recetas en cards  
+- ⏱️ Tiempo de preparación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🔧 **Panel de administración**  
+- ➕ Agregar nuevas recetas (imagen, título, ingredientes, pasos)  
+- ✏️ Editar recetas existentes  
+- 🗑️ Eliminar recetas  
+- 💾 Persistencia en LocalStorage  
+
+---
+
+## 🛠️ **Tecnologías utilizadas**  
+
+```plaintext
+Frontend:
+- HTML5
+- CSS3 (Flexbox + Grid)
+- React
+- JavaScript ES6+
+- LocalStorage API
+
+```
+
+---
+
+## 🚀 **Instalación y uso**  
+
+1. Clona el repositorio:  
+```bash
+git clone https://github.com/omarmatt31/webRecetas.git
+```
+
+2. Abre la aplicación:  
+```bash
+start index.html  # Windows
+```
+
+3. Accesos:  
+- 👨‍🍳 **Blog público**: `https://webrecetasmatt.netlify.app`  
+
+---
+
+## 🏗️ **Estructura del código**  
+
+---
+
+## 📜 **Licencia**  
+
+MIT License © 2023 [Omar Mattos](https://github.com/omarmatt31).  
+
+---
+
+💡 **Consejo:** Usa `JSON.stringify()` para almacenar arrays/objetos en LocalStorage.  
+
+**¡Buen provecho y happy coding!** 👨‍🍳💻

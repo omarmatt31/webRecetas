@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const ItemReceta = ({receta, fila, borrarReceta}) => {
 
@@ -44,9 +45,9 @@ const ItemReceta = ({receta, fila, borrarReceta}) => {
         ></img>
       </td>
       <td className="text-center align-middle">
-        <Button variant="warning" className="me-lg-2">
+        <Link className="me-lg-2 btn btn-warning" to={'/administrador/editar/'+receta.id}>
           <i className="bi bi-pencil-square"></i>
-        </Button>
+        </Link>
         <Button variant="danger" onClick={eliminarReceta}>
           <i className="bi bi-trash"></i>
         </Button>

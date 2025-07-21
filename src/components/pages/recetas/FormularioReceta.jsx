@@ -3,8 +3,9 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useForm} from "react-hook-form";
 import { useState } from "react";
 import Swal from 'sweetalert2'
+import { useNavigate, useParams } from "react-router";
 
-const FormularioReceta = ({crearReceta}) => {
+const FormularioReceta = ({crearReceta, titulo, buscarReceta, editarReceta}) => {
     const {
       register,
       handleSubmit,
@@ -12,22 +13,57 @@ const FormularioReceta = ({crearReceta}) => {
       formState: { errors },
       setValue
     } = useForm();
+    const navegacion = useNavigate()
+    const {id} = useParams()
+
+    useEffect(()=>{
+        if(titulo === 'Modificar Receta'){
+          const recetaBuscada =  buscarReceta(id)
+          console.log(recetaBuscada)
+          if(recetaBuscada === undefined){
+            navegacion('/administrador')
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "La receta es inexistente",
+                });
+          }else{
+            setValue('nombreReceta', recetaBuscada.nombreReceta)
+            setValue('duracion', recetaBuscada.duracion)
+            setValue('imagen', recetaBuscada.imagen)
+            setValue('descripcion', recetaBuscada.descripcion)
+            setValue('porciones', recetaBuscada.porciones)
+            setValue('ingredientes', recetaBuscada.ingredientes)
+            setValue('preparacion', recetaBuscada.preparacion)
+          }
+        }
+    },[])
 
     const onSubmit = (receta) =>{
-        console.log('estoy en el onsubmit')
-        if(crearReceta(receta)){
-        Swal.fire({
-          title: "Receta creada",
-          text: `La receta ${receta.nombreReceta} fue creada correctamente`,
-          icon: "success"
-          });
+        if(titulo === 'Receta Nueva'){
+            if(crearReceta(receta)){
+            Swal.fire({
+            title: "Receta creada",
+            text: `La receta ${receta.nombreReceta} fue creada correctamente`,
+            icon: "success"
+            });
+            }
+            reset()
+        }else{
+            if(editarReceta(id, receta)){
+                Swal.fire({
+                title: "Receta editada",
+                text: `La receta ${receta.nombreReceta} fue editada correctamente`,
+                icon: "success"
+            });
+            }
         }
-        reset()
+        navegacion('/administrador')
     }
 
     return (
         <section className="container mainSection">
-      <h1 className="display-4 mt-5">Receta Nueva</h1>
+      <h1 className="display-4 mt-5 colorTitulos">{titulo}</h1>
       <hr />
      <Form className="my-4" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="formNombreReceta">
@@ -188,7 +224,7 @@ const FormularioReceta = ({crearReceta}) => {
             {errors.preparación?.message}
           </Form.Text>
         </Form.Group>
-        <Button type="submit" variant="success">
+        <Button type="submit" variant="warning">
           Guardar
         </Button>
       </Form>

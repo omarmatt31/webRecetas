@@ -34,6 +34,27 @@ function App() {
     setRecetas(recetasFiltradas)
     return true
   }
+
+  const buscarReceta=(idReceta)=>{
+    const recetaBuscada = recetas.find((itemReceta)=> itemReceta.id === idReceta)
+    return recetaBuscada
+  }
+
+  const editarReceta=(idReceta, recetaActualizada)=>{
+    const recetasEditadas = recetas.map((itemReceta)=>{
+      if(itemReceta.id === idReceta){
+        return {
+          ...itemReceta, 
+          ...recetaActualizada
+        }
+      }
+      else{
+        return itemReceta
+      }
+    })
+    setRecetas(recetasEditadas)
+    return true
+  }
   return (
     <>
       <BrowserRouter>
@@ -45,8 +66,8 @@ function App() {
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route index element={<Administrador setRecetas={setRecetas} recetas={recetas} borrarReceta={borrarReceta}></Administrador>}></Route>
-              <Route path="crear" element={<FormularioReceta crearReceta={crearReceta}></FormularioReceta>}></Route>
-              <Route path="editar" element={<FormularioReceta></FormularioReceta>}></Route>
+              <Route path="crear" element={<FormularioReceta titulo={'Receta Nueva'} crearReceta={crearReceta}></FormularioReceta>}></Route>
+              <Route path="editar/:id" element={<FormularioReceta titulo={'Modificar Receta'} buscarReceta={buscarReceta} editarReceta={editarReceta}></FormularioReceta>}></Route>
             </Route>
             <Route path="*" element={<Error404></Error404>}></Route>
           </Routes>

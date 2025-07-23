@@ -62,7 +62,7 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Inicio recetas={recetas}></Inicio>}></Route>
-            <Route path="/detalle" element={<DetalleReceta></DetalleReceta>}></Route>
+            <Route path="/detalle/:id" element={<DetalleReceta buscarReceta={buscarReceta}></DetalleReceta>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route index element={<Administrador setRecetas={setRecetas} recetas={recetas} borrarReceta={borrarReceta}></Administrador>}></Route>

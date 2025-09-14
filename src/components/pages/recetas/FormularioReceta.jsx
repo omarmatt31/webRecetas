@@ -4,8 +4,9 @@ import { useForm} from "react-hook-form";
 import { useState } from "react";
 import Swal from 'sweetalert2'
 import { useNavigate, useParams } from "react-router";
+import { crearReceta, editarReceta, obtenerRecetasPorId } from "../../../helpers/queries";
 
-const FormularioReceta = ({crearReceta, titulo, buscarReceta, editarReceta}) => {
+const FormularioReceta = ({titulo, buscarReceta}) => {
     const {
       register,
       handleSubmit,
@@ -17,40 +18,57 @@ const FormularioReceta = ({crearReceta, titulo, buscarReceta, editarReceta}) => 
     const {id} = useParams()
 
     useEffect(()=>{
-        if(titulo === 'Modificar Receta'){
-          const recetaBuscada =  buscarReceta(id)
-          console.log(recetaBuscada)
-          if(recetaBuscada === undefined){
-            navegacion('/administrador')
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "La receta es inexistente",
-                });
-          }else{
-            setValue('nombreReceta', recetaBuscada.nombreReceta)
-            setValue('duracion', recetaBuscada.duracion)
-            setValue('imagen', recetaBuscada.imagen)
-            setValue('descripcion', recetaBuscada.descripcion)
-            setValue('porciones', recetaBuscada.porciones)
-            setValue('ingredientes', recetaBuscada.ingredientes)
-            setValue('preparacion', recetaBuscada.preparacion)
-          }
-        }
+      obtenerReceta();
     },[])
 
-    const onSubmit = (receta) =>{
+    const obtenerReceta = async()=>{
+        if(titulo === 'Modificar Receta'){
+          const respuesta = await obtenerRecetasPorId(id)
+          if(respuesta.status === 200){
+            const recetaBuscada = await respuesta.json()
+            if(recetaBuscada === undefined){
+              navegacion('/administrador')
+              Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "La receta es inexistente",
+                  });
+            }else{
+              setValue('nombreReceta', recetaBuscada.nombreReceta)
+              setValue('duracion', recetaBuscada.duracion)
+              setValue('imagen', recetaBuscada.imagen)
+              setValue('descripcion', recetaBuscada.descripcion)
+              setValue('porciones', recetaBuscada.porciones)
+              setValue('ingredientes', recetaBuscada.ingredientes)
+              setValue('preparacion', recetaBuscada.preparacion)
+            }
+          }
+          const recetaBuscada =  buscarReceta(id)
+          console.log(recetaBuscada)
+
+        }
+    }
+
+    const onSubmit = async (receta) =>{
         if(titulo === 'Receta Nueva'){
-            if(crearReceta(receta)){
-            Swal.fire({
-            title: "Receta creada",
-            text: `La receta ${receta.nombreReceta} fue creada correctamente`,
-            icon: "success"
+          const respuesta = await crearReceta(receta)
+            if(respuesta.status === 201){
+              Swal.fire({
+              title: "Receta creada",
+              text: `La receta ${receta.nombreReceta} fue creada correctamente`,
+              icon: "success"
+              });
+            reset()
+            }else{
+              Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No pudo crearse la receta",
             });
             }
-            reset()
         }else{
-            if(editarReceta(id, receta)){
+          const respuesta = await editarReceta(receta, id)
+            if(respuesta.status === 200){
                 Swal.fire({
                 title: "Receta editada",
                 text: `La receta ${receta.nombreReceta} fue editada correctamente`,

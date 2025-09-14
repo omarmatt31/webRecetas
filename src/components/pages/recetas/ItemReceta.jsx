@@ -1,8 +1,9 @@
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
+import { borrarRecetaPorId, leerRecetas } from "../../../helpers/queries";
 
-const ItemReceta = ({receta, fila, borrarReceta}) => {
+const ItemReceta = ({receta, fila, setListaRecetas}) => {
 
     const eliminarReceta=()=>{
     Swal.fire({
@@ -14,14 +15,18 @@ const ItemReceta = ({receta, fila, borrarReceta}) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Eliminar",
       cancelButtonText: "Cancelar"
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.isConfirmed) {
-        if(borrarReceta(receta.id)){
+        const respuesta = await borrarRecetaPorId(receta._id)
+        if(respuesta.status === 200){
           Swal.fire({
             title: "Receta eliminada",
             text: `La receta ${receta.nombreReceta} fue eliminada correctamente`,
             icon: "success",
           });
+          const respuestaRecetas = await leerRecetas();
+          const recetasActualizadas = await respuestaRecetas.json()
+          setListaRecetas(recetasActualizadas)
         }else{
             Swal.fire({
             title: "Ocurrio un error",
@@ -45,7 +50,7 @@ const ItemReceta = ({receta, fila, borrarReceta}) => {
         ></img>
       </td>
       <td className="text-center align-middle">
-        <Link className="me-lg-2 btn btn-warning" to={'/administrador/editar/'+receta.id}>
+        <Link className="me-lg-2 btn btn-warning" to={'/administrador/editar/'+receta._id}>
           <i className="bi bi-pencil-square"></i>
         </Link>
         <Button variant="danger" onClick={eliminarReceta}>

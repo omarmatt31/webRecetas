@@ -19,7 +19,7 @@ const CardReceta = ({receta}) => {
           </Card.Text>
         </Card.Body>
         <Card.Footer className="text-center fondoCard">
-          <Link variant="warning" className="me-2 text-secondary btn btn-warning" to={'/detalle/'+receta.id}>
+          <Link variant="warning" className="me-2 text-secondary btn btn-warning" to={'/detalle/'+receta._id}>
             Ver más!
           </Link>
         </Card.Footer>

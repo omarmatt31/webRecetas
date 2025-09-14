@@ -1,7 +1,24 @@
 import { Container, Row } from "react-bootstrap";
 import CardReceta from "./recetas/CardReceta";
+import { useEffect, useState } from "react";
+import { leerRecetas } from "../../helpers/queries";
 
-const Index = ({recetas}) => {
+const Index = () => {
+    const [recetas, setRecetas] = useState([]);
+
+    useEffect(()=>{
+        obtenerRecetas();
+    },[])
+
+    const obtenerRecetas = async ()=>{
+        const respuesta = await leerRecetas()
+        if(respuesta.status === 200){
+            const datos = await respuesta.json()
+            setRecetas(datos)
+        }else{
+            console.info('Ocurrio un error al buscar un producto')
+        }
+    }
     return (
         <section>
         <img
@@ -15,7 +32,7 @@ const Index = ({recetas}) => {
         <Container className="mt-5">
             <Row>
                 {
-                    recetas.map((receta)=> <CardReceta key={receta.id} receta={receta}></CardReceta>)
+                    recetas.map((receta)=> <CardReceta key={receta._id} receta={receta}></CardReceta>)
                 }
             </Row>
         </Container>

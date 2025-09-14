@@ -52,7 +52,7 @@ const Administrador = ({setRecetas, recetas, borrarReceta}) => {
         </thead>
         <tbody>
           {
-            listaRecetas.map((receta, indice)=> <ItemReceta key={receta._id} receta={receta} fila={indice+1} borrarReceta={borrarReceta}></ItemReceta>)
+            listaRecetas.map((receta, indice)=> <ItemReceta key={receta._id} receta={receta} fila={indice+1} setListaRecetas={setListaRecetas}></ItemReceta>)
           }
         </tbody>
       </Table>

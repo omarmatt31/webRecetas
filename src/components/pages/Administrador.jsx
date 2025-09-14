@@ -2,12 +2,31 @@ import { Button, Table } from "react-bootstrap";
 import ItemReceta from "./recetas/ItemReceta";
 import { recetasData } from "../../data/recetasPrueba"
 import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { leerRecetas } from "../../helpers/queries";
 
 const Administrador = ({setRecetas, recetas, borrarReceta}) => {
+
+    const [listaRecetas, setListaRecetas]= useState([]);
+
+    useEffect(()=>{
+      obtenerRecetas();
+    }, [])
+
+    const obtenerRecetas = async ()=>{
+      const respuesta = await leerRecetas()
+      if(respuesta.status === 200){
+        const datos = await respuesta.json()
+        setListaRecetas(datos)
+      }else{
+        console.info('Ocurrio un error al buscar un producto')
+      }
+    }
 
     const cargarRecetasPrueba = () =>{
       setRecetas(recetasData)
     }
+
     return (
     <section className="container mainSection">
       <div className="d-flex justify-content-between align-items-center mt-5">
@@ -33,7 +52,7 @@ const Administrador = ({setRecetas, recetas, borrarReceta}) => {
         </thead>
         <tbody>
           {
-            recetas.map((receta, indice)=> <ItemReceta key={receta.id} receta={receta} fila={indice+1} borrarReceta={borrarReceta}></ItemReceta>)
+            listaRecetas.map((receta, indice)=> <ItemReceta key={receta._id} receta={receta} fila={indice+1} borrarReceta={borrarReceta}></ItemReceta>)
           }
         </tbody>
       </Table>

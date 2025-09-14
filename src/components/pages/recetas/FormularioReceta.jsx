@@ -4,8 +4,9 @@ import { useForm} from "react-hook-form";
 import { useState } from "react";
 import Swal from 'sweetalert2'
 import { useNavigate, useParams } from "react-router";
+import { crearReceta } from "../../../helpers/queries";
 
-const FormularioReceta = ({crearReceta, titulo, buscarReceta, editarReceta}) => {
+const FormularioReceta = ({titulo, buscarReceta, editarReceta}) => {
     const {
       register,
       handleSubmit,
@@ -39,16 +40,23 @@ const FormularioReceta = ({crearReceta, titulo, buscarReceta, editarReceta}) => 
         }
     },[])
 
-    const onSubmit = (receta) =>{
+    const onSubmit = async (receta) =>{
         if(titulo === 'Receta Nueva'){
-            if(crearReceta(receta)){
-            Swal.fire({
-            title: "Receta creada",
-            text: `La receta ${receta.nombreReceta} fue creada correctamente`,
-            icon: "success"
+          const respuesta = await crearReceta(receta)
+            if(respuesta.status === 201){
+              Swal.fire({
+              title: "Receta creada",
+              text: `La receta ${receta.nombreReceta} fue creada correctamente`,
+              icon: "success"
+              });
+            reset()
+            }else{
+              Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No pudo crearse la receta",
             });
             }
-            reset()
         }else{
             if(editarReceta(id, receta)){
                 Swal.fire({

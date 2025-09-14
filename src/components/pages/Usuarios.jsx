@@ -28,7 +28,7 @@ const Usuarios = ({setRecetas, recetas, borrarReceta}) => {
       <div className="d-flex justify-content-between align-items-center mt-5">
         <h2 className="display-6 colorTitulos">Administrador de Usuarios</h2>
         <div>
-          <Link className="btn btn-warning" to={'/administrador/crear'} >
+          <Link className="btn btn-warning" to={'/usuarios/crear'} >
             <i class="bi bi-person-add fs-3"></i>
           </Link>
         </div>

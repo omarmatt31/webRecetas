@@ -35,9 +35,6 @@ const Administrador = ({setRecetas, recetas, borrarReceta}) => {
           <Link className="btn btn-warning" to={'/administrador/crear'} >
             <i className="bi bi-file-earmark-plus fs-3"></i>
           </Link>
-          <Button className="btn btn-danger ms-2 text-light" onClick={cargarRecetasPrueba}>
-            <i className="bi bi-database-fill-add fs-3"></i>
-          </Button>
         </div>
       </div>
       <hr />

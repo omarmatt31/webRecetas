@@ -4,9 +4,9 @@ import { useForm} from "react-hook-form";
 import { useState } from "react";
 import Swal from 'sweetalert2'
 import { useNavigate, useParams } from "react-router";
-import { crearReceta, editarReceta, obtenerRecetasPorId } from "../../../helpers/queries";
+import { crearReceta, crearUsuario, editarReceta, editarUsuario, obtenerUsuarioPorId } from "../../../helpers/queries";
 
-const FormularioUsuario = ({titulo, buscarReceta}) => {
+const FormularioUsuario = ({titulo}) => {
     const {
       register,
       handleSubmit,
@@ -18,44 +18,37 @@ const FormularioUsuario = ({titulo, buscarReceta}) => {
     const {id} = useParams()
 
     useEffect(()=>{
-      obtenerReceta();
+      obtenerUsuario();
     },[])
 
-    const obtenerReceta = async()=>{
-        if(titulo === 'Modificar Receta'){
-          const respuesta = await obtenerRecetasPorId(id)
+    const obtenerUsuario = async()=>{
+        if(titulo === 'Modificar Usuario'){
+          const respuesta = await obtenerUsuarioPorId(id)
           if(respuesta.status === 200){
-            const recetaBuscada = await respuesta.json()
-            if(recetaBuscada === undefined){
-              navegacion('/administrador')
+            const usuarioBuscado = await respuesta.json()
+            if(usuarioBuscado === undefined){
+              navegacion('/usuarios')
               Swal.fire({
                   icon: "error",
                   title: "Oops...",
-                  text: "La receta es inexistente",
+                  text: "El usuario es inexistente",
                   });
             }else{
-              setValue('nombreReceta', recetaBuscada.nombreReceta)
-              setValue('duracion', recetaBuscada.duracion)
-              setValue('imagen', recetaBuscada.imagen)
-              setValue('descripcion', recetaBuscada.descripcion)
-              setValue('porciones', recetaBuscada.porciones)
-              setValue('ingredientes', recetaBuscada.ingredientes)
-              setValue('preparacion', recetaBuscada.preparacion)
+              setValue('nombreUsuario', usuarioBuscado.nombreUsuario)
+              setValue('email', usuarioBuscado.email)
+              setValue('password', usuarioBuscado.password)
             }
           }
-          const recetaBuscada =  buscarReceta(id)
-          console.log(recetaBuscada)
-
         }
     }
 
-    const onSubmit = async (receta) =>{
-        if(titulo === 'Receta Nueva'){
-          const respuesta = await crearReceta(receta)
+    const onSubmit = async (usuario) =>{
+        if(titulo === 'Usuario Nuevo'){
+          const respuesta = await crearUsuario(usuario)
             if(respuesta.status === 201){
               Swal.fire({
-              title: "Receta creada",
-              text: `La receta ${receta.nombreReceta} fue creada correctamente`,
+              title: "Usuario creado",
+              text: `El usuario ${usuario.nombreUsuario} fue creado correctamente`,
               icon: "success"
               });
             reset()
@@ -63,188 +56,91 @@ const FormularioUsuario = ({titulo, buscarReceta}) => {
               Swal.fire({
               icon: "error",
               title: "Oops...",
-              text: "No pudo crearse la receta",
+              text: "No pudo crearse el usuario",
             });
             }
         }else{
-          const respuesta = await editarReceta(receta, id)
+          const respuesta = await editarUsuario(usuario, id)
             if(respuesta.status === 200){
                 Swal.fire({
-                title: "Receta editada",
-                text: `La receta ${receta.nombreReceta} fue editada correctamente`,
+                title: "Usuario editado",
+                text: `El usuario ${usuario.nombreUsuario} fue editado correctamente`,
                 icon: "success"
             });
             }
         }
-        navegacion('/administrador')
+        navegacion('/usuarios')
     }
 
     return (
-        <section className="container mainSection">
-      <h1 className="display-4 mt-5 colorTitulos">{titulo}</h1>
+    <section className="container mainSection w-50">
+      <h1 className="display-5 mt-5 colorTitulos">{titulo}</h1>
       <hr />
      <Form className="my-4" onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group className="mb-3" controlId="formNombreReceta">
-          <Form.Label>Nombre</Form.Label>
+        <Form.Group className="mb-3" controlId="formNombreUsuario">
+          <Form.Label>Nombre Usuario</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ej: Pollo con Papas"
-            {...register("nombreReceta", {
-              required: "El nombre de la receta es un dato obligatorio",
+            placeholder="Ej: admin"
+            {...register("nombreUsuario", {
+              required: "El nombre del usuario es un dato obligatorio",
               minLength: {
                 value: 2,
                 message:
-                  "El nombre de la receta debe tener almenos 2 caracteres",
+                  "El nombre del usuario debe tener almenos 2 caracteres",
               },
               maxLength: {
                 value: 100,
                 message:
-                  "El nombre de la receta debe tener como maximo 100 caracteres",
+                  "El nombre del usuario debe tener como maximo 100 caracteres",
               },
             })}
           />
           <Form.Text className="text-danger">
-            {errors.nombreReceta?.message}
+            {errors.nombreUsuario?.message}
           </Form.Text>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formDuracion">
-          <Form.Label>Duracion</Form.Label>
+        <Form.Group className="mb-3" controlId="formEmail">
+          <Form.Label>Email</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ej: 1h 30min"
-            {...register("duracion", {
-              required: "La duración es un valor obligatorio",
-              minLength: {
-                value: 2,
-                message:
-                  "La duración de la receta debe tener al menos 2 caracteres",
-              },
-              maxLength: {
-                value: 100,
-                message:
-                  "La duración de la receta debe tener como maximo 100 caracteres",
-              },
+            placeholder="Ej: admin@admin.com"
+            {...register("email", {
+              required: "El Email es un valor obligatorio",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Por favor ingresa un email válido"
+                }
             })}
           />
           <Form.Text className="text-danger">
-            {errors.duracion?.message}
+            {errors.email?.message}
           </Form.Text>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formImagen">
-          <Form.Label>Imagen URL*</Form.Label>
+        <Form.Group className="mb-3" controlId="formPassword">
+          <Form.Label>Password</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ej: https://www.pexels.com/es-es/vans-en-blanco-y-negro-fuera-de-la-decoracion-para-colgar-en-la-pared-1230679/"
-            {...register("imagen", {
-              required: "La url de la imagen es un dato obligatorio",
+            {...register("password", {
+              required: "La contraseña es un dato obligatorio",
               pattern: {
                 value:
-                  /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/,
+                  /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/,
                 message:
-                  "La imagen debe ser una url de imagen valida terminada en (jpg|jpeg|png|webp)",
+                  "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un caracter especial",
               },
             })}
           />
           <Form.Text className="text-danger">
-            {errors.imagen?.message}
+            {errors.password?.message}
           </Form.Text>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formIngredientes">
-          <Form.Label>Descripción</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ej: Delicioso pollo en una salsa cremosa de curry..."
-            {...register("descripcion", {
-              required: "La descripcion del plato es obligatorio",
-              minLength: {
-                value: 2,
-                message:
-                  "La descripción del plato debe tener al menos 2 caracteres",
-              },
-              maxLength: {
-                value: 300,
-                message:
-                  "La descripción del plato debe tener como maximo 300 caracteres",
-              },
-            })}
-          />
-          <Form.Text className="text-danger">
-            {errors.descripcion?.message}
-          </Form.Text>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formPorciones">
-          <Form.Label>Porciones</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ej: 4 Porciones"
-            {...register("porciones", {
-              required: "La cantidad de porciones es obligatorio",
-              minLength: {
-                value: 2,
-                message:
-                  "La cantidad de porciones de la receta debe tener al menos 2 caracteres",
-              },
-              maxLength: {
-                value: 100,
-                message:
-                  "La cantidad de porciones de la receta debe tener como maximo 100 caracteres",
-              },
-            })}
-          />
-          <Form.Text className="text-danger">
-            {errors.porciones?.message}
-          </Form.Text>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formIngredientes">
-          <Form.Label>Ingredientes</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ej: 2 kg de alitas de pollo"
-            as="textarea"
-            {...register("ingredientes", {
-              required: "Los ingredientes son obligatorio",
-              minLength: {
-                value: 2,
-                message:
-                  "Los ingredientes de la receta debe tener al menos 2 caracteres",
-              },
-              maxLength: {
-                value: 400,
-                message:
-                  "Los ingredientes de la receta debe tener como maximo 400 caracteres",
-              },
-            })}
-          />
-          <Form.Text className="text-danger">
-            {errors.ingredientes?.message}
-          </Form.Text>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formPreparacion">
-          <Form.Label>Preparacion</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Ej: Salpimentar el pollo..."
-            as="textarea"
-            {...register("preparacion", {
-              required: "La preparación es un dato obligatorio",
-              minLength: {
-                value: 5,
-                message: "La preparación debe tener al menos 5 caracteres",
-              },
-              maxLength: {
-                value: 1000,
-                message:
-                  "La preparación debe tener como máximo 1000 caracteres",
-              },
-            })}
-          />
-          <Form.Text className="text-danger">
-            {errors.preparación?.message}
-          </Form.Text>
-        </Form.Group>
-        <Button type="submit" variant="warning">
-          Guardar
-        </Button>
+        <div className="text-center">
+            <Button type="submit" variant="warning">
+            Guardar
+            </Button>
+        </div>
+
       </Form>
     </section>
     );

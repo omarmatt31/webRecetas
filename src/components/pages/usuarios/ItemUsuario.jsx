@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { Link } from "react-router";
-import { borrarRecetaPorId, leerRecetas, leerUsuarios } from "../../../helpers/queries";
+import { borrarUsuarioPorId, leerUsuarios } from "../../../helpers/queries";
 
 const ItemUsuario = ({usuario, fila, setListaUsuarios}) => {
 
@@ -43,7 +43,7 @@ const ItemUsuario = ({usuario, fila, setListaUsuarios}) => {
       <td className="align-middle">{usuario.nombreUsuario}</td>
       <td className="text-center align-middle">{usuario.email}</td>
       <td className="text-center align-middle">
-        <Link className="me-lg-2 btn btn-warning" to={'/usuario/editar/'+usuario._id}>
+        <Link className="me-lg-2 btn btn-warning" to={'/usuarios/editar/'+usuario._id}>
           <i className="bi bi-pencil-square"></i>
         </Link>
         <Button variant="danger" onClick={eliminarUsuario}>

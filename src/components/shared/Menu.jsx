@@ -25,8 +25,10 @@ const Menu = ({usuarioAdmin, setUsuarioAdmin}) => {
             <NavLink className={'nav-link'} to={'/'}>Inicio</NavLink>
             {usuarioAdmin ? (
               <>
-                <NavLink className={'nav-link'} to={'/administrador'}>Administrador</NavLink>
-                <NavLink className={'nav-link'} to={'/usuarios'}>Usuarios</NavLink>
+              <NavDropdown title="Administrador" id="basic-nav-dropdown">
+                <NavDropdown.Item as={Link} to={'/administrador'}>Recetas</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to={'/usuarios'}>Usuarios</NavDropdown.Item>
+              </NavDropdown>
                 <Button className="nav-link" onClick={logout}>Logout</Button>
               </> 
               ):(

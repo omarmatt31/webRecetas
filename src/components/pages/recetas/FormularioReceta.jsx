@@ -81,7 +81,7 @@ const FormularioReceta = ({titulo, buscarReceta}) => {
 
     return (
         <section className="container mainSection">
-      <h1 className="display-4 mt-5 colorTitulos">{titulo}</h1>
+      <h1 className="display-5 mt-5 colorTitulos">{titulo}</h1>
       <hr />
      <Form className="my-4" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="formNombreReceta">

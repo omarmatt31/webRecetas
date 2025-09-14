@@ -73,8 +73,8 @@ function App() {
             </Route>
             <Route path="/usuarios" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route index element={<Usuarios setRecetas={setRecetas} recetas={recetas} borrarReceta={borrarReceta}></Usuarios>}></Route>
-              <Route path="crear" element={<FormularioUsuario titulo={'Receta Nueva'} crearReceta={crearReceta}></FormularioUsuario>}></Route>
-              <Route path="editar/:id" element={<FormularioUsuario titulo={'Modificar Receta'} buscarReceta={buscarReceta} editarReceta={editarReceta}></FormularioUsuario>}></Route>
+              <Route path="crear" element={<FormularioUsuario titulo={'Usuario Nuevo'} crearReceta={crearReceta}></FormularioUsuario>}></Route>
+              <Route path="editar/:id" element={<FormularioUsuario titulo={'Modificar Usuario'} buscarReceta={buscarReceta} editarReceta={editarReceta}></FormularioUsuario>}></Route>
             </Route>
             <Route path="*" element={<Error404></Error404>}></Route>
           </Routes>

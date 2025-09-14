@@ -50,7 +50,7 @@ const ItemReceta = ({receta, fila, setListaRecetas}) => {
         ></img>
       </td>
       <td className="text-center align-middle">
-        <Link className="me-lg-2 btn btn-warning" to={'/administrador/editar/'+receta.id}>
+        <Link className="me-lg-2 btn btn-warning" to={'/administrador/editar/'+receta._id}>
           <i className="bi bi-pencil-square"></i>
         </Link>
         <Button variant="danger" onClick={eliminarReceta}>

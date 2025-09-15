@@ -3,9 +3,10 @@ import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { leerUsuarios } from "../../helpers/queries";
 import ItemUsuario from "./usuarios/ItemUsuario";
+import Spinner from 'react-bootstrap/Spinner';
 
 const Usuarios = () => {
-
+    const [mostrarSpinner, setMostrarSpinner] = useState(true)
     const [listaUsuarios, setListaUsuarios]= useState([]);
 
     useEffect(()=>{
@@ -20,6 +21,7 @@ const Usuarios = () => {
       }else{
         console.info('Ocurrio un error al buscar un producto')
       }
+      setMostrarSpinner(false)
     }
 
     return (
@@ -33,20 +35,28 @@ const Usuarios = () => {
         </div>
       </div>
       <hr />
-      <Table responsive striped bordered hover>
-        <thead>
-          <tr className="text-center ">
-            <th className="text-secondary">#</th>
-            <th className="text-secondary">Nombre Usuario</th>
-            <th className="text-secondary">Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            listaUsuarios.map((usuario, indice)=> <ItemUsuario key={usuario._id} usuario={usuario} fila={indice+1} setListaUsuarios={setListaUsuarios}></ItemUsuario>)
-          }
-        </tbody>
-      </Table>
+      {
+        mostrarSpinner ?                     
+              <div className="text-center mt-5">
+                <Spinner animation="border" variant="warning" role="status" ></Spinner>
+              </div> 
+              :
+                <Table responsive striped bordered hover>
+                    <thead>
+                    <tr className="text-center ">
+                        <th className="text-secondary">#</th>
+                        <th className="text-secondary">Nombre Usuario</th>
+                        <th className="text-secondary">Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        listaUsuarios.map((usuario, indice)=> <ItemUsuario key={usuario._id} usuario={usuario} fila={indice+1} setListaUsuarios={setListaUsuarios}></ItemUsuario>)
+                    }
+                    </tbody>
+                </Table>
+      }
+
     </section>
     );
 };

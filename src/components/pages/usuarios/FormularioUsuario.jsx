@@ -1,10 +1,9 @@
 import { useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button} from "react-bootstrap";
 import { useForm} from "react-hook-form";
-import { useState } from "react";
 import Swal from 'sweetalert2'
 import { useNavigate, useParams } from "react-router";
-import { crearReceta, crearUsuario, editarReceta, editarUsuario, obtenerUsuarioPorId } from "../../../helpers/queries";
+import { crearUsuario, editarUsuario, obtenerUsuarioPorId } from "../../../helpers/queries";
 
 const FormularioUsuario = ({titulo}) => {
     const {

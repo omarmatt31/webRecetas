@@ -28,7 +28,8 @@ export const crearReceta = async(recetaNueva)=>{
         const respuesta = await fetch(urlRecetas, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
             },
             body: JSON.stringify(recetaNueva)
         })
@@ -44,7 +45,8 @@ export const editarReceta = async(recetaEditada, id)=>{
         const respuesta = await fetch(urlRecetas+`/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
             },
             body: JSON.stringify(recetaEditada)
         })
@@ -59,6 +61,9 @@ export const borrarRecetaPorId = async(id)=>{
     try{
         const respuesta = await fetch(urlRecetas+`/${id}`, {
             method: 'DELETE',
+            headers: {
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
+            },
         })
         return respuesta
     }catch(error){
@@ -92,7 +97,8 @@ export const crearUsuario = async(usuarioNuevo)=>{
         const respuesta = await fetch(urlUsuarios, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
             },
             body: JSON.stringify(usuarioNuevo)
         })
@@ -108,7 +114,8 @@ export const editarUsuario = async(usuarioEditado, id)=>{
         const respuesta = await fetch(urlUsuarios+`/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
             },
             body: JSON.stringify(usuarioEditado)
         })
@@ -123,6 +130,9 @@ export const borrarUsuarioPorId = async(id)=>{
     try{
         const respuesta = await fetch(urlUsuarios+`/${id}`, {
             method: 'DELETE',
+            headers: {
+            'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
+            },
         })
         return respuesta
     }catch(error){

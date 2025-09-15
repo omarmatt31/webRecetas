@@ -3,7 +3,7 @@ import { Container, Card, Row, Col, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router";
 import { obtenerRecetasPorId } from "../../helpers/queries";
 
-const DetalleReceta = ({buscarReceta}) => {
+const DetalleReceta = () => {
   const {id} = useParams()
 
   const [receta, setReceta] = useState({})

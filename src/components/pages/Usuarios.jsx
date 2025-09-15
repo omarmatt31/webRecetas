@@ -1,11 +1,10 @@
-import { Button, Table } from "react-bootstrap";
-import { recetasData } from "../../data/recetasPrueba"
+import { Table } from "react-bootstrap";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
-import { leerRecetas, leerUsuarios } from "../../helpers/queries";
+import { leerUsuarios } from "../../helpers/queries";
 import ItemUsuario from "./usuarios/ItemUsuario";
 
-const Usuarios = ({setRecetas, recetas, borrarReceta}) => {
+const Usuarios = () => {
 
     const [listaUsuarios, setListaUsuarios]= useState([]);
 

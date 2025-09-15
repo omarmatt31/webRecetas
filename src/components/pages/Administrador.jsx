@@ -4,9 +4,10 @@ import { recetasData } from "../../data/recetasPrueba"
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import { leerRecetas } from "../../helpers/queries";
+import Spinner from 'react-bootstrap/Spinner';
 
 const Administrador = ({setRecetas}) => {
-
+    const [mostrarSpinner, setMostrarSpinner] = useState(true)
     const [listaRecetas, setListaRecetas]= useState([]);
 
     useEffect(()=>{
@@ -21,6 +22,7 @@ const Administrador = ({setRecetas}) => {
       }else{
         console.info('Ocurrio un error al buscar un producto')
       }
+      setMostrarSpinner(false)
     }
 
     const cargarRecetasPrueba = () =>{
@@ -38,7 +40,13 @@ const Administrador = ({setRecetas}) => {
         </div>
       </div>
       <hr />
-      <Table responsive striped bordered hover>
+      {
+            mostrarSpinner ?                     
+              <div className="text-center mt-5">
+                <Spinner animation="border" variant="warning" role="status" ></Spinner>
+              </div> 
+              :
+              <Table responsive striped bordered hover>
         <thead>
           <tr className="text-center ">
             <th className="text-secondary">#</th>
@@ -49,10 +57,12 @@ const Administrador = ({setRecetas}) => {
         </thead>
         <tbody>
           {
-            listaRecetas.map((receta, indice)=> <ItemReceta key={receta._id} receta={receta} fila={indice+1} setListaRecetas={setListaRecetas}></ItemReceta>)
+              listaRecetas.map((receta, indice)=> <ItemReceta key={receta._id} receta={receta} fila={indice+1} setListaRecetas={setListaRecetas}></ItemReceta>)
           }
         </tbody>
       </Table>
+      }
+      
     </section>
     );
 };

@@ -1,16 +1,34 @@
 import { useEffect, useState } from "react";
 import { Container, Card, Row, Col, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router";
+import { obtenerRecetasPorId } from "../../helpers/queries";
 
-const DetalleReceta = ({buscarReceta}) => {
+const DetalleReceta = () => {
   const {id} = useParams()
 
   const [receta, setReceta] = useState({})
 
   useEffect(()=>{
-    const recetaBuscada = buscarReceta(id)
-    setReceta(recetaBuscada)
-  }, [])
+        obtenerReceta();
+      },[])
+  
+      const obtenerReceta = async()=>{
+        const respuesta = await obtenerRecetasPorId(id)
+        if(respuesta.status === 200){
+          const recetaBuscada = await respuesta.json()
+              if(recetaBuscada === undefined){
+                navegacion('/administrador')
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "La receta es inexistente",
+                    });
+              }else{
+                setReceta(recetaBuscada)
+              }
+          }
+      }
+
     return (
     <Container className="my-3 mainSection">
         <Row>

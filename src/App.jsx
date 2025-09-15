@@ -6,14 +6,16 @@ import Menu from "./components/shared/Menu";
 import Inicio from "./components/pages/Index"
 import DetalleReceta from "./components/pages/DetalleReceta";
 import Administrador from "./components/pages/Administrador";
+import Usuarios from "./components/pages/Usuarios";
 import Login from "./components/pages/Login";
 import { useEffect, useState } from "react";
 import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import FormularioReceta from "./components/pages/recetas/FormularioReceta";
 import {v4 as uuidv4} from 'uuid';
+import FormularioUsuario from "./components/pages/usuarios/FormularioUsuario";
 
 function App() {
-  const usuarioLogueado = sessionStorage.getItem('userKey')||false;
+  const usuarioLogueado = JSON.parse(sessionStorage.getItem('userKey'))||{};
   const recetasLocalStorage = JSON.parse(localStorage.getItem('catalogoRecetas')) || []
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado)
   const [recetas, setRecetas] = useState(recetasLocalStorage)
@@ -21,40 +23,11 @@ function App() {
   useEffect(()=>{
     localStorage.setItem('catalogoRecetas', JSON.stringify(recetas))
   }, [recetas])
+  
+   useEffect(()=>{
+    sessionStorage.setItem('userKey', JSON.stringify(usuarioAdmin))
+  }, [usuarioAdmin])
 
-  const crearReceta=(recetaNueva)=>{
-    recetaNueva.id = uuidv4();
-    console.log(recetaNueva)
-    setRecetas([...recetas, recetaNueva])
-    return true
-  }
-
-  const borrarReceta=(idReceta)=>{
-    const recetasFiltradas = recetas.filter((itemReceta)=> itemReceta.id !== idReceta)
-    setRecetas(recetasFiltradas)
-    return true
-  }
-
-  const buscarReceta=(idReceta)=>{
-    const recetaBuscada = recetas.find((itemReceta)=> itemReceta.id === idReceta)
-    return recetaBuscada
-  }
-
-  const editarReceta=(idReceta, recetaActualizada)=>{
-    const recetasEditadas = recetas.map((itemReceta)=>{
-      if(itemReceta.id === idReceta){
-        return {
-          ...itemReceta, 
-          ...recetaActualizada
-        }
-      }
-      else{
-        return itemReceta
-      }
-    })
-    setRecetas(recetasEditadas)
-    return true
-  }
   return (
     <>
       <BrowserRouter>
@@ -62,12 +35,17 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Inicio recetas={recetas}></Inicio>}></Route>
-            <Route path="/detalle/:id" element={<DetalleReceta buscarReceta={buscarReceta}></DetalleReceta>}></Route>
+            <Route path="/detalle/:id" element={<DetalleReceta></DetalleReceta>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
-              <Route index element={<Administrador setRecetas={setRecetas} recetas={recetas} borrarReceta={borrarReceta}></Administrador>}></Route>
-              <Route path="crear" element={<FormularioReceta titulo={'Receta Nueva'} crearReceta={crearReceta}></FormularioReceta>}></Route>
-              <Route path="editar/:id" element={<FormularioReceta titulo={'Modificar Receta'} buscarReceta={buscarReceta} editarReceta={editarReceta}></FormularioReceta>}></Route>
+              <Route index element={<Administrador setRecetas={setRecetas}></Administrador>}></Route>
+              <Route path="crear" element={<FormularioReceta titulo={'Receta Nueva'}></FormularioReceta>}></Route>
+              <Route path="editar/:id" element={<FormularioReceta titulo={'Modificar Receta'} ></FormularioReceta>}></Route>
+            </Route>
+            <Route path="/usuarios" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+              <Route index element={<Usuarios setRecetas={setRecetas}></Usuarios>}></Route>
+              <Route path="crear" element={<FormularioUsuario titulo={'Usuario Nuevo'}></FormularioUsuario>}></Route>
+              <Route path="editar/:id" element={<FormularioUsuario titulo={'Modificar Usuario'}></FormularioUsuario>}></Route>
             </Route>
             <Route path="*" element={<Error404></Error404>}></Route>
           </Routes>

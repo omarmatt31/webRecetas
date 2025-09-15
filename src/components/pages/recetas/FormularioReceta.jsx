@@ -1,12 +1,11 @@
 import { useEffect } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button} from "react-bootstrap";
 import { useForm} from "react-hook-form";
-import { useState } from "react";
 import Swal from 'sweetalert2'
 import { useNavigate, useParams } from "react-router";
 import { crearReceta, editarReceta, obtenerRecetasPorId } from "../../../helpers/queries";
 
-const FormularioReceta = ({titulo, buscarReceta}) => {
+const FormularioReceta = ({titulo}) => {
     const {
       register,
       handleSubmit,
@@ -43,9 +42,6 @@ const FormularioReceta = ({titulo, buscarReceta}) => {
               setValue('preparacion', recetaBuscada.preparacion)
             }
           }
-          const recetaBuscada =  buscarReceta(id)
-          console.log(recetaBuscada)
-
         }
     }
 
@@ -81,7 +77,7 @@ const FormularioReceta = ({titulo, buscarReceta}) => {
 
     return (
         <section className="container mainSection">
-      <h1 className="display-4 mt-5 colorTitulos">{titulo}</h1>
+      <h1 className="display-5 mt-5 colorTitulos">{titulo}</h1>
       <hr />
      <Form className="my-4" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3" controlId="formNombreReceta">

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Form, Button} from "react-bootstrap";
 import { useForm} from "react-hook-form";
 import Swal from 'sweetalert2'
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { crearUsuario, editarUsuario, obtenerUsuarioPorId } from "../../../helpers/queries";
 
 const FormularioUsuario = ({titulo}) => {
@@ -134,10 +134,13 @@ const FormularioUsuario = ({titulo}) => {
             {errors.password?.message}
           </Form.Text>
         </Form.Group>
-        <div className="text-center">
+        <div className="d-flex justify-content-around">
             <Button type="submit" variant="warning">
-            Guardar
+              Guardar
             </Button>
+            <Link to={"/usuarios"} className="btn btn-danger ms-5">
+              Cancelar
+            </Link>
         </div>
 
       </Form>

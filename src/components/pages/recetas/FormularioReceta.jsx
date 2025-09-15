@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Form, Button} from "react-bootstrap";
 import { useForm} from "react-hook-form";
 import Swal from 'sweetalert2'
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { crearReceta, editarReceta, obtenerRecetasPorId } from "../../../helpers/queries";
 
 const FormularioReceta = ({titulo}) => {
@@ -238,9 +238,14 @@ const FormularioReceta = ({titulo}) => {
             {errors.preparación?.message}
           </Form.Text>
         </Form.Group>
-        <Button type="submit" variant="warning">
-          Guardar
-        </Button>
+        <div className="d-flex justify-content-around">
+          <Button type="submit" variant="warning">
+            Guardar
+          </Button>
+          <Link to={"/administrador"} className="btn btn-danger ms-5">
+            Cancelar
+          </Link>
+        </div>
       </Form>
     </section>
     );

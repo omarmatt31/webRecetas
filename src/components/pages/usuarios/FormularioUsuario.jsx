@@ -24,6 +24,7 @@ const FormularioUsuario = ({titulo}) => {
     const obtenerUsuario = async()=>{
         if(titulo === 'Modificar Usuario'){
           const respuesta = await obtenerUsuarioPorId(id)
+          console.log(respuesta)
           if(respuesta.status === 200){
             const usuarioBuscado = await respuesta.json()
             if(usuarioBuscado === undefined){
@@ -36,7 +37,6 @@ const FormularioUsuario = ({titulo}) => {
             }else{
               setValue('nombreUsuario', usuarioBuscado.nombreUsuario)
               setValue('email', usuarioBuscado.email)
-              setValue('password', usuarioBuscado.password)
             }
           }
         }
@@ -120,7 +120,7 @@ const FormularioUsuario = ({titulo}) => {
         <Form.Group className="mb-3" controlId="formPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type="text"
+            type="password"
             {...register("password", {
               required: "La contraseña es un dato obligatorio",
               pattern: {

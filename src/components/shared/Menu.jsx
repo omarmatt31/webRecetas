@@ -4,7 +4,6 @@ import { NavLink, Link, useNavigate } from "react-router";
 
 const Menu = ({usuarioAdmin, setUsuarioAdmin}) => {
     const navegacion = useNavigate()
-    console.log(usuarioAdmin.nombreUsuario)
     const logout = ()=>{
       setUsuarioAdmin({})
       navegacion('/')

@@ -15,7 +15,7 @@ import {v4 as uuidv4} from 'uuid';
 import FormularioUsuario from "./components/pages/usuarios/FormularioUsuario";
 
 function App() {
-  const usuarioLogueado = sessionStorage.getItem('userKey')||false;
+  const usuarioLogueado = JSON.parse(sessionStorage.getItem('userKey'))||{};
   const recetasLocalStorage = JSON.parse(localStorage.getItem('catalogoRecetas')) || []
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado)
   const [recetas, setRecetas] = useState(recetasLocalStorage)

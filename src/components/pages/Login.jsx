@@ -15,7 +15,7 @@ const Login = ({setUsuarioAdmin}) => {
     const iniciarSesion = async (usuario)=>{
         const respuesta = await login(usuario)
         if(respuesta.status === 200){
-           const datosUsuario = await respuesta.json
+           const datosUsuario = await respuesta.json()
            setUsuarioAdmin({nombreUsuario: datosUsuario.nombreUsuario, token: datosUsuario.token})
            Swal.fire({
                 title: "Incio de sesión correcto",

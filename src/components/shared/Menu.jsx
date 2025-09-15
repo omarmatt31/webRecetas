@@ -4,9 +4,9 @@ import { NavLink, Link, useNavigate } from "react-router";
 
 const Menu = ({usuarioAdmin, setUsuarioAdmin}) => {
     const navegacion = useNavigate()
+    console.log(usuarioAdmin.nombreUsuario)
     const logout = ()=>{
-      setUsuarioAdmin(false)
-      sessionStorage.removeItem('userKey')
+      setUsuarioAdmin({})
       navegacion('/')
     }
     return (
@@ -23,7 +23,7 @@ const Menu = ({usuarioAdmin, setUsuarioAdmin}) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <NavLink className={'nav-link'} to={'/'}>Inicio</NavLink>
-            {usuarioAdmin ? (
+            {usuarioAdmin.token ? (
               <>
               <NavDropdown title="Administrador" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to={'/administrador'}>Recetas</NavDropdown.Item>

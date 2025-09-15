@@ -23,6 +23,10 @@ function App() {
   useEffect(()=>{
     localStorage.setItem('catalogoRecetas', JSON.stringify(recetas))
   }, [recetas])
+  
+   useEffect(()=>{
+    sessionStorage.setItem('userKey', JSON.stringify(usuarioAdmin))
+  }, [usuarioAdmin])
 
   const crearReceta=(recetaNueva)=>{
     recetaNueva.id = uuidv4();
